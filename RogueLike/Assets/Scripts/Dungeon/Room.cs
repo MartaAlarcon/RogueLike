@@ -73,11 +73,21 @@ public class Room : MonoBehaviour
                 case Door.DoorType.left:
                     if (GetLeft() == null)
                     {
+                        // Si NO hay puerta conectada, activamos el objeto
+                        door.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        // Si HAY puerta conectada, desactivamos el objeto
                         door.gameObject.SetActive(false);
                     }
                     break;
                 case Door.DoorType.right:
                     if (GetRight() == null)
+                    {
+                        door.gameObject.SetActive(true);
+                    }
+                    else
                     {
                         door.gameObject.SetActive(false);
                     }
@@ -85,11 +95,19 @@ public class Room : MonoBehaviour
                 case Door.DoorType.top:
                     if (GetTop() == null)
                     {
+                        door.gameObject.SetActive(true);
+                    }
+                    else
+                    {
                         door.gameObject.SetActive(false);
                     }
                     break;
                 case Door.DoorType.bottom:
                     if (GetBottom() == null)
+                    {
+                        door.gameObject.SetActive(true);
+                    }
+                    else
                     {
                         door.gameObject.SetActive(false);
                     }
@@ -132,7 +150,7 @@ public class Room : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        //Gizmos.color = Color.red;
+       // Gizmos.color = Color.red;
         //Gizmos.DrawWireCube(transform.position, new Vector3(Width, Height, 0));
     }
 
