@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool FacingLeft { get { return facingLeft; } set { facingLeft = value; } }
+    private bool facingLeft = false;
+
     PlayerInputManager inputManager;
     private Rigidbody2D rb;
     private Animator animator;
-
     private float moveX;
     private float moveY;
 
@@ -37,4 +39,5 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.velocity = direction * inputManager.speed;
     }
+
 }
