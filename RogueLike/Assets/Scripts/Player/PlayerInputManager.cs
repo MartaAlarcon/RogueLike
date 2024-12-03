@@ -30,7 +30,6 @@ public class PlayerInputManager : MonoBehaviour, InputController.IPlayerActions
         if (context.performed)
         {
             direction = context.ReadValue<Vector2>();
-            Debug.Log("Direction: " + direction);
         }
         else if (context.canceled)
         {
