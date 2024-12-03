@@ -9,6 +9,7 @@ public class Sword : MonoBehaviour
 
     [SerializeField] private GameObject slashAnimPrefab;
     [SerializeField] private Transform slashAnimSpawnPoint;
+    [SerializeField] private Transform weaponCollider;
 
     private InputController playerControls;
     private Animator myAnimator;
@@ -48,11 +49,14 @@ public class Sword : MonoBehaviour
         {
             activeWeapon.transform.rotation = Quaternion.Euler(0, -180, angle);
             facingLeft = true;
+            weaponCollider.transform.rotation = Quaternion.Euler(0, -180, angle);
         }
         else
         {
             activeWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
             facingLeft = false;
+            weaponCollider.transform.rotation = Quaternion.Euler(0, 0, angle);
+
         }
     }
     void AdjustSwordPosition()
@@ -72,9 +76,13 @@ public class Sword : MonoBehaviour
 
     private void Attack() {
         myAnimator.SetTrigger("Attack");
-
+        weaponCollider.gameObject.SetActive(true);
         slashAnim = Instantiate(slashAnimPrefab, slashAnimSpawnPoint.position, Quaternion.identity);
         slashAnim.transform.parent = this.transform.parent;
+    }
+    public void DoneAttackingAnimEvent()
+    {
+        weaponCollider.gameObject.SetActive(false);
     }
     
     public void SwingUpFlipAnim() {
