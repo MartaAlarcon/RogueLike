@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public bool FacingLeft { get { return facingLeft; } set { facingLeft = value; } }
     private bool facingLeft = false;
+    public static PlayerMovement Instance;
 
     PlayerInputManager inputManager;
     private Rigidbody2D rb;
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         inputManager = GetComponent<PlayerInputManager>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
