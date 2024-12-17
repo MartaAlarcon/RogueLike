@@ -12,12 +12,11 @@ GameObject:
   - component: {fileID: 7149171320116001401}
   - component: {fileID: 4486195602836774025}
   - component: {fileID: 1173376872484954894}
-  - component: {fileID: 6317376063634685799}
-  - component: {fileID: 5547828462455965077}
   - component: {fileID: -1613162775722827251}
   - component: {fileID: -225092553653091254}
   - component: {fileID: -6052645407497003090}
   - component: {fileID: 9106086429225607940}
+  - component: {fileID: -9172843086610267031}
   m_Layer: 0
   m_Name: Mummy
   m_TagString: Untagged
@@ -124,8 +123,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.003468275, y: 0}
-  m_Size: {x: 0.5626159, y: 0.6666667}
+  m_Offset: {x: 0.0034685135, y: 0.010658801}
+  m_Size: {x: 0.87527466, y: 0.9605454}
   m_Direction: 0
 --- !u!50 &1173376872484954894
 Rigidbody2D:
@@ -154,31 +153,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &6317376063634685799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8781061595238774680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b3cf7cbc3c36494ca031b20b6bf579b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5547828462455965077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8781061595238774680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54cedc2758e04814595090b270766673, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 3
 --- !u!95 &-1613162775722827251
 Animator:
   serializedVersion: 5
@@ -189,7 +163,7 @@ Animator:
   m_GameObject: {fileID: 8781061595238774680}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cc9363a74151f6f438f667ba869b9052, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -240,3 +214,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 3
+--- !u!114 &-9172843086610267031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8781061595238774680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a6c722b43e7b7047ae7718b6e07b771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
