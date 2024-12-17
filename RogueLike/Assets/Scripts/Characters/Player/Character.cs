@@ -18,7 +18,6 @@ public class Character : MonoBehaviour, IDamageable
         spawnPoint = GameObject.FindWithTag("Respawn");
     }
 
-    public void Attack(){}
     public void Hurt()
     {
 
