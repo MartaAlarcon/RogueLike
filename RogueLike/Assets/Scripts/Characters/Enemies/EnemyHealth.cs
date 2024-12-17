@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int startingHealth = 3;
+    [SerializeField] private GameObject coinPrefab; 
     private int currentHealth;
     private KnockBack knockBack;
     private Flash flash;
@@ -28,7 +29,19 @@ public class EnemyHealth : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
+            DropCoin(); 
             Destroy(gameObject);
+        }
+    }
+    private void DropCoin()
+    {
+        if (coinPrefab != null)
+        {
+            Instantiate(coinPrefab, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogWarning("Coin prefab not assigned in the inspector.");
         }
     }
 }
