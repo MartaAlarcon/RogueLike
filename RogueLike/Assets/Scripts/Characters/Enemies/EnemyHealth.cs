@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [SerializeField] HealthBar healthBar;
     [SerializeField] private int startingHealth = 3;
     [SerializeField] private GameObject coinPrefab; 
     private int currentHealth;
@@ -12,16 +13,20 @@ public class EnemyHealth : MonoBehaviour
 
     private void Awake()
     {
+        healthBar = GetComponentInChildren<HealthBar>();
         flash = GetComponent<Flash>();
         knockBack = GetComponent<KnockBack>();
     }
     public void Start()
     {
         currentHealth = startingHealth;
+        healthBar.UpdateHealthBar(startingHealth, currentHealth);
+
     }
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        healthBar.UpdateHealthBar(startingHealth, currentHealth);
         knockBack.GetKnockedBack(PlayerMovement.Instance.transform, 10f);
         StartCoroutine(flash.FlashRoutine());
     }
