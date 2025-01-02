@@ -2,33 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public class Sword : MonoBehaviour, IWeapon
 {
     public bool FacingLeft { get { return facingLeft; } set { facingLeft = value; } }
     private bool facingLeft = false;
 
     [SerializeField] private GameObject slashAnimPrefab;
     [SerializeField] private Transform slashAnimSpawnPoint;
-    [SerializeField] private Transform weaponCollider;
 
+    private Transform weaponCollider;
     private InputController playerControls;
     private Animator myAnimator;
-    private PlayerMovement playerController;
-    private ActiveWeapon activeWeapon;
+
 
     private GameObject slashAnim;
 
     private void Awake() {
-        playerController = GetComponentInParent<PlayerMovement>();
-        activeWeapon = GetComponentInParent<ActiveWeapon>();
+
         myAnimator = GetComponent<Animator>();
         playerControls = new InputController();
+      
     }
     private void OnEnable() {
         playerControls.Enable();
     }
+    
     void Start()
     {
+        weaponCollider = PlayerMovement.Instance.GetWeaponCollider();
+        slashAnimSpawnPoint = GameObject.Find("Slash").transform;
         playerControls.Combat.Attack.started += _ => Attack();
     }
     void Update()
@@ -38,23 +40,23 @@ public class Sword : MonoBehaviour
     private void MouseFollowWithOffset()
     {
         Vector3 mousePosition = Input.mousePosition;
-        Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(playerController.transform.position);
+        Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(PlayerMovement.Instance.transform.position);
         float angle = Mathf.Atan2(mousePosition.y, mousePosition.x) * Mathf.Rad2Deg;
         if (mousePosition.x < playerScreenPoint.x)
         {
-            activeWeapon.transform.rotation = Quaternion.Euler(0, -180, angle);
+            ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0, -180, angle);
             facingLeft = true;
             weaponCollider.transform.rotation = Quaternion.Euler(0, -180, angle);
         }
         else
         {
-            activeWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+            ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0, 0, angle);
             facingLeft = false;
             weaponCollider.transform.rotation = Quaternion.Euler(0, 0, angle);
 
         }
     }
-    private void Attack() {
+    public void Attack() {
         myAnimator.SetTrigger("Attack");
         weaponCollider.gameObject.SetActive(true);
         slashAnim = Instantiate(slashAnimPrefab, slashAnimSpawnPoint.position, Quaternion.identity);
@@ -79,5 +81,18 @@ public class Sword : MonoBehaviour
             slashAnim.GetComponent<SpriteRenderer>().flipX = true;
         }
     }
-    
+    private void OnDisable()
+    {
+        playerControls.Combat.Attack.started -= _ => Attack();
+        playerControls.Disable();
+        myAnimator = null;
+    }
+
+    public void CleanUp()
+    {
+        playerControls.Disable();
+        myAnimator = null;
+    }
+
+
 }
