@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public bool FacingLeft { get { return facingLeft; } set { facingLeft = value; } }
     private bool facingLeft = false;
     public static PlayerMovement Instance;
+    [SerializeField] private Transform weaponCollider;
 
     PlayerInputManager inputManager;
     private Rigidbody2D rb;
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
         Move(direction);
     }
+    public Transform GetWeaponCollider() { return weaponCollider; }
 
     private void Move(Vector2 direction)
     {

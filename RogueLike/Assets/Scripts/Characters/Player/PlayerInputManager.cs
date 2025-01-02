@@ -25,6 +25,7 @@ public class PlayerInputManager : MonoBehaviour, InputController.IPlayerActions
     {
         inputs.Disable();
     }
+
     public void OnMovement(InputAction.CallbackContext context)
     {
         if (context.performed)
