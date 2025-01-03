@@ -7,7 +7,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] HealthBar healthBar;
     [SerializeField] private int startingHealth = 3;
     [SerializeField] private GameObject coinPrefab; 
-    private int currentHealth;
+    private float currentHealth;
     private KnockBack knockBack;
     private Flash flash;
 
@@ -23,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
         healthBar.UpdateHealthBar(startingHealth, currentHealth);
 
     }
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         healthBar.UpdateHealthBar(startingHealth, currentHealth);
