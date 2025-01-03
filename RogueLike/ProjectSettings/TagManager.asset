@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Spike
   - Enemy
+  - Walls
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
   - 

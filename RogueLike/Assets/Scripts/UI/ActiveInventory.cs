@@ -37,19 +37,32 @@ public class ActiveInventory : MonoBehaviour
     }
     private void ChangeActiveWeapon()
     {
-        if(ActiveWeapon.Instance.CurrentActiveWeapon != null)
+        // Limpia el arma actual
+        if (ActiveWeapon.Instance.CurrentActiveWeapon != null)
         {
             (ActiveWeapon.Instance.CurrentActiveWeapon as IWeapon)?.CleanUp();
             Destroy(ActiveWeapon.Instance.CurrentActiveWeapon.gameObject);
         }
-        if (!transform.GetChild(slotNumber).GetComponentInChildren<InventorySlot>())
+
+        // Obtén el slot actual
+        InventorySlot currentSlot = transform.GetChild(slotNumber).GetComponentInChildren<InventorySlot>();
+
+        // Si no hay slot o el slot no está desbloqueado, no equipar arma
+        if (currentSlot == null || !currentSlot.isUnlocked)
         {
             ActiveWeapon.Instance.WeaponNull();
+            Debug.Log($"Slot {slotNumber + 1} está bloqueado o vacío.");
             return;
         }
-        GameObject weaponToSpawn = transform.GetChild(slotNumber).GetComponentInChildren<InventorySlot>().GetWeaponInfo().weaponPrefab;
+
+        // Instanciar el arma si está desbloqueada
+        WeaponInfo weaponInfo = currentSlot.GetWeaponInfo();
+        if (weaponInfo == null) return;
+
+        GameObject weaponToSpawn = weaponInfo.weaponPrefab;
         GameObject newWeapon = Instantiate(weaponToSpawn, ActiveWeapon.Instance.transform.position, Quaternion.identity);
 
+        ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0, 0, 0);
         newWeapon.transform.parent = ActiveWeapon.Instance.transform;
         ActiveWeapon.Instance.NewWeapon(newWeapon.GetComponent<MonoBehaviour>());
     }
