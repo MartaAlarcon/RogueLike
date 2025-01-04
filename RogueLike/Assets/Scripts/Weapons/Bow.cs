@@ -29,7 +29,14 @@ public class Bow : MonoBehaviour, IWeapon
     public void Attack()
     {
         animator.SetTrigger(FIRE_HASH);
-        GameObject arrow = Instantiate(arrowPrefab,arrowSpawnPoint.position,ActiveWeapon.Instance.transform.rotation);
+
+        // Obtiene una flecha de la pool en lugar de instanciar una nueva
+        GameObject arrow = Spawner.Instance.GetFromPool();
+        if (arrow != null)
+        {
+            arrow.transform.position = arrowSpawnPoint.position;
+            arrow.transform.rotation = arrowSpawnPoint.rotation; // Rotación del arco
+        }
     }
     public WeaponInfo GetWeaponInfo()
     {

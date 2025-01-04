@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 893556007492625656}
   - component: {fileID: 9050079838619018583}
   - component: {fileID: 1117411276614581630}
-  - component: {fileID: 6749987114935456250}
   m_Layer: 3
   m_Name: ParticleSystem
   m_TagString: Untagged
@@ -4867,19 +4866,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.0402714}
   serializedVersion: 2
   m_Radius: 0.59573567
---- !u!114 &6749987114935456250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5752606214816976619}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b979d8d01a0c59439d802bac9d96d25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageAmount: 5
 --- !u!1 &8518668576113262346
 GameObject:
   m_ObjectHideFlags: 0
@@ -4892,9 +4878,10 @@ GameObject:
   - component: {fileID: 3078774141763731895}
   - component: {fileID: 6876518637748154053}
   - component: {fileID: 837371147382415684}
+  - component: {fileID: 1437526799021723100}
   m_Layer: 3
   m_Name: Flamethrower
-  m_TagString: Untagged
+  m_TagString: Flamethrower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4928,11 +4915,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireParticles: {fileID: 893556007492625656}
-  damagePerSecond: 3
-  range: 5
-  hitLayers:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!212 &6876518637748154053
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5006,3 +4988,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1437526799021723100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8518668576113262346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcec13d87e57a854fb5cea375d4cb6cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseDamage: 0.2
+  damageIncreaseRate: 0.2
+  currentDamage: 0

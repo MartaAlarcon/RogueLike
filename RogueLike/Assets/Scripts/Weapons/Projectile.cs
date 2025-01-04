@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -16,14 +14,10 @@ public class Projectile : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Walls"))
         {
-            Destroy(gameObject);
-        }
-        if (collision.gameObject.CompareTag("Walls")){
-            Destroy(gameObject);
+            Spawner.Instance.ReturnToPool(this.gameObject);
         }
     }
-
-
 }
+
