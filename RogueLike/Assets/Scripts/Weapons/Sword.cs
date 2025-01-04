@@ -17,16 +17,18 @@ public class Sword : MonoBehaviour, IWeapon
 
     private GameObject slashAnim;
 
-    private void Awake() {
+    private void Awake()
+    {
 
         myAnimator = GetComponent<Animator>();
         playerControls = new InputController();
-      
+
     }
-    private void OnEnable() {
+    private void OnEnable()
+    {
         playerControls.Enable();
     }
-    
+
     void Start()
     {
         weaponCollider = PlayerMovement.Instance.GetWeaponCollider();
@@ -56,7 +58,8 @@ public class Sword : MonoBehaviour, IWeapon
 
         }
     }
-    public void Attack() {
+    public void Attack()
+    {
         myAnimator.SetTrigger("Attack");
         weaponCollider.gameObject.SetActive(true);
         slashAnim = Instantiate(slashAnimPrefab, slashAnimSpawnPoint.position, Quaternion.identity);
@@ -65,15 +68,18 @@ public class Sword : MonoBehaviour, IWeapon
     public void DoneAttackingAnimEvent()
     {
         weaponCollider.gameObject.SetActive(false);
-    }   
-    public void SwingUpFlipAnim() {
+    }
+    public void SwingUpFlipAnim()
+    {
         slashAnim.gameObject.transform.rotation = Quaternion.Euler(-180, 0, 0);
 
-        if (facingLeft) { 
+        if (facingLeft)
+        {
             slashAnim.GetComponent<SpriteRenderer>().flipX = true;
         }
     }
-    public void SwingDownFlipAnim() {
+    public void SwingDownFlipAnim()
+    {
         slashAnim.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
 
         if (facingLeft)

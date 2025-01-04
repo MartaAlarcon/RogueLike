@@ -27,6 +27,11 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= damage;
         healthBar.UpdateHealthBar(startingHealth, currentHealth);
+        DetectDeath();
+       
+    }
+    public void GetKnockedBack()
+    {
         knockBack.GetKnockedBack(PlayerMovement.Instance.transform, 10f);
         StartCoroutine(flash.FlashRoutine());
     }
@@ -39,14 +44,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
     private void DropCoin()
-    {
-        if (coinPrefab != null)
-        {
-            Instantiate(coinPrefab, transform.position, Quaternion.identity);
-        }
-        else
-        {
-            Debug.LogWarning("Coin prefab not assigned in the inspector.");
-        }
+    {       
+        Instantiate(coinPrefab, transform.position, Quaternion.identity);       
     }
 }
