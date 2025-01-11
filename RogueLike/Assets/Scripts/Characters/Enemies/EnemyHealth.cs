@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] HealthBar healthBar;
     [SerializeField] private int startingHealth = 3;
@@ -23,11 +23,11 @@ public class EnemyHealth : MonoBehaviour
         healthBar.UpdateHealthBar(startingHealth, currentHealth);
 
     }
-    public void TakeDamage(float damage)
+    public void Hurt(float damage)
     {
         currentHealth -= damage;
         healthBar.UpdateHealthBar(startingHealth, currentHealth);
-        DetectDeath();
+        Die();
        
     }
     public void GetKnockedBack()
@@ -35,7 +35,7 @@ public class EnemyHealth : MonoBehaviour
         knockBack.GetKnockedBack(PlayerMovement.Instance.transform, 10f);
         StartCoroutine(flash.FlashRoutine());
     }
-    public void DetectDeath()
+    public void Die()
     {
         if (currentHealth <= 0)
         {

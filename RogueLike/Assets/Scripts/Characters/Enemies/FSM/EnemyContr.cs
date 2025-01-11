@@ -13,26 +13,32 @@ public enum States
 
 public class EnemyContr : MonoBehaviour
 {
-    public Collider2D chaseCollider; // Collider para perseguir
-    public Collider2D damageCollider; // Collider para recibir daño
-    public float attackRange = 1.0f; // Distancia para iniciar ataque
-
+    public float attackRange = 1.0f; 
+    public float attackCooldown = 2.0f; 
     public int HP;
     public GameObject target;
     private ChaseBehaviour _chaseB;
     private EnemyHealthFSM _enemyHealthFSM;
     public States Currentstate;
 
+    private Animator animator;
+    private bool attack = false;
+
+    public GameObject explosion;
+
     private void Start()
     {
+
         _chaseB = GetComponent<ChaseBehaviour>();
         _enemyHealthFSM = GetComponent<EnemyHealthFSM>();
         Currentstate = States.Idle;
+        animator = GetComponent<Animator>();
+        explosion.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision == chaseCollider && collision.CompareTag("Player") && CheckIfAlife())
+        if (collision.gameObject.layer == 7 && CheckIfAlife())
         {
             target = collision.gameObject;
             Currentstate = States.Chase;
@@ -41,9 +47,19 @@ public class EnemyContr : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision == chaseCollider && collision.CompareTag("Player") && CheckIfAlife())
+        if (collision.gameObject.layer == 7 && CheckIfAlife())
         {
             Currentstate = States.Idle;
+        }
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 7 && CheckIfAlife())
+        {
+            target = collision.gameObject;
+            Currentstate = States.Attack;
+            StartCoroutine(PerformAttack()); 
         }
     }
 
@@ -51,12 +67,10 @@ public class EnemyContr : MonoBehaviour
     {
         HP -= (int)damage;
 
-        // Si el enemigo sigue vivo, regresa a su estado previo o Idle
         if (CheckIfAlife())
         {
             if (Currentstate == States.Chase)
             {
-                // Mantener Chase si ya estaba persiguiendo
                 _chaseB.Chase(target.transform, transform);
             }
             else if (Currentstate != States.Die)
@@ -81,7 +95,6 @@ public class EnemyContr : MonoBehaviour
         switch (Currentstate)
         {
             case States.Attack:
-                Attack();
                 break;
             case States.Idle:
                 Idle();
@@ -95,24 +108,16 @@ public class EnemyContr : MonoBehaviour
         }
     }
 
-    public void Attack()
+    private IEnumerator PerformAttack()
     {
-        Debug.Log("Attack");
         _chaseB.StopChasing();
 
-        // Verificar si está cerca del jugador
-        if (Vector2.Distance(transform.position, target.transform.position) <= attackRange)
-        {
-            // Lógica para ataque, por ejemplo, infligir daño al jugador
-            // Suponiendo que el jugador tiene un método TakeDamage:
-            // PlayerHealth.Instance.TakeDamage(damage);
-            Debug.Log("Attack executed on player");
-            _chaseB.StopChasing();
-        }
-        else
-        {
-            Currentstate = States.Chase; // Volver a perseguir si está fuera de alcance
-        }
+        attack = true;
+        animator.SetBool("Attack", attack);
+        Debug.Log("Attack executed on player");
+
+        yield return new WaitForSeconds(attackCooldown); // Esperar tras atacar
+        Currentstate = States.Chase; // Volver a perseguir
     }
 
     public void Idle()
@@ -129,10 +134,21 @@ public class EnemyContr : MonoBehaviour
 
     public void Chase()
     {
+
         Debug.Log("Chase");
         if (target != null)
         {
+            attack = false;
+            animator.SetBool("Attack", attack);
             _chaseB.Chase(target.transform, transform);
         }
+    }
+    public void Explosion()
+    {
+        explosion.SetActive(true);
+    }
+    public void StopExplosion()
+    {
+        explosion.SetActive(false);
     }
 }

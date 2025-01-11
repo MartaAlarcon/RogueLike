@@ -3,23 +3,24 @@ using UnityEngine;
 
 public class DamageSource : MonoBehaviour
 {
-    [SerializeField] private float damageAmount = 1f;
+    [SerializeField] private int damageAmount = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Detecta enemigos que tienen el script EnemyHealthFSM
+        // Ignorar colliders que sean triggers
+        if (collision.isTrigger) return;
+
         EnemyHealthFSM enemyHealthFSM = collision.GetComponent<EnemyHealthFSM>();
         if (enemyHealthFSM != null)
         {
-            enemyHealthFSM.TakeDamage(damageAmount);
-            return; // Si se encontró EnemyHealthFSM, no sigue buscando
+            enemyHealthFSM.Hurt(damageAmount);
+            return;
         }
 
-        // Detecta enemigos que tienen el script EnemyHealth
         EnemyHealth enemyHealth = collision.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
         {
-            enemyHealth.TakeDamage(damageAmount);
+            enemyHealth.Hurt(damageAmount);
             enemyHealth.GetKnockedBack();
         }
     }

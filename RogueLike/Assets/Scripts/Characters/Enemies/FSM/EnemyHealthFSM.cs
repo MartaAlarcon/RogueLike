@@ -1,20 +1,18 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyHealthFSM : MonoBehaviour
+public class EnemyHealthFSM : MonoBehaviour, IDamageable
 {
     [SerializeField] private HealthBar healthBar;
     [SerializeField] private int startingHealth = 3;
     [SerializeField] private GameObject coinPrefab;
     private float currentHealth;
-    //private KnockBack knockBack;
     private Flash flash;
 
     private void Awake()
     {
         healthBar = GetComponentInChildren<HealthBar>();
         flash = GetComponent<Flash>();
-        //knockBack = GetComponent<KnockBack>();
     }
 
     private void Start()
@@ -23,23 +21,22 @@ public class EnemyHealthFSM : MonoBehaviour
         healthBar.UpdateHealthBar(startingHealth, currentHealth);
     }
 
-    public void TakeDamage(float damage)
+    public void Hurt(float damage)
     {
         currentHealth -= damage;
         healthBar.UpdateHealthBar(startingHealth, currentHealth);
 
         if (currentHealth > 0)
         {
-            StartCoroutine(flash.FlashRoutine()); // Efecto visual
-            //knockBack.GetKnockedBack(PlayerMovement.Instance.transform, 10f); // Retroceso
+            StartCoroutine(flash.FlashRoutine()); 
         }
         else
         {
-            DetectDeath();
+            Die();
         }
     }
 
-    private void DetectDeath()
+    public void Die()
     {
         if (currentHealth <= 0)
         {
@@ -50,9 +47,11 @@ public class EnemyHealthFSM : MonoBehaviour
 
     private void DropCoin()
     {
-        if (coinPrefab != null)
-        {
-            Instantiate(coinPrefab, transform.position, Quaternion.identity);
-        }
+        Vector2 randomOffset = new Vector2(
+           Random.Range(-0.5f, 0.5f), 
+           Random.Range(-0.5f, 0.5f));
+
+        Instantiate(coinPrefab, transform.position, Quaternion.identity);
+        Instantiate(coinPrefab, (Vector2)transform.position + randomOffset, Quaternion.identity);
     }
 }
