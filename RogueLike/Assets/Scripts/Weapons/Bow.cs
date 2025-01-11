@@ -30,14 +30,18 @@ public class Bow : MonoBehaviour, IWeapon
     {
         animator.SetTrigger(FIRE_HASH);
 
-        // Obtiene una flecha de la pool en lugar de instanciar una nueva
         GameObject arrow = Spawner.Instance.GetFromPool();
         if (arrow != null)
         {
             arrow.transform.position = arrowSpawnPoint.position;
-            arrow.transform.rotation = arrowSpawnPoint.rotation; // Rotación del arco
+            arrow.transform.rotation = arrowSpawnPoint.rotation;
+
+            // Reinicia cualquier estado de la flecha si es necesario
+            Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
+            if (rb != null) rb.velocity = Vector2.zero;
         }
     }
+
     public WeaponInfo GetWeaponInfo()
     {
         return weaponInfo;

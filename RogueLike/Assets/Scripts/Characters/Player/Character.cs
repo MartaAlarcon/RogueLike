@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Character : MonoBehaviour, IDamageable
 {
+    [SerializeField] HealthBar healthBar;
     [SerializeField] private Material redFlashMat;
     [SerializeField] private float health;
+    private float startingHealth = 5f;
     [SerializeField] private float restoreDefaultMatTime = .2f;
     public float damage;
 
@@ -17,9 +19,12 @@ public class Character : MonoBehaviour, IDamageable
 
     public void Start()
     {
-        health = 10;
+        healthBar = GetComponentInChildren<HealthBar>();
+        health = startingHealth;
         animator = GetComponent<Animator>();
         spawnPoint = GameObject.FindWithTag("Respawn");
+        healthBar.UpdateHealthBar(startingHealth, health);
+
     }
     public void Awake()
     {
@@ -30,14 +35,16 @@ public class Character : MonoBehaviour, IDamageable
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Hurt();
+            Hurt(1);
         }
     }
-    public void Hurt()
+    
+    public void Hurt(float damage)
     {
-        health--;
+        health-=damage;
+        healthBar.UpdateHealthBar(startingHealth, health);
         StartCoroutine(FlashRoutine());
-
+        if (health <= 0) Die();
     }
     public void Die()
     {     
@@ -52,8 +59,9 @@ public class Character : MonoBehaviour, IDamageable
         float deathAnimLength = stateInfo.length;
         yield return new WaitForSeconds(deathAnimLength);
         transform.position = spawnPoint.transform.position;
-        health = 10;
+        health = startingHealth;
         animator.SetFloat("Health", health);
+        healthBar.UpdateHealthBar(startingHealth, health);
     }
     public IEnumerator FlashRoutine()
     {

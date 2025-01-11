@@ -63,7 +63,7 @@ public class Flamethrower : MonoBehaviour, IWeapon
                 if (enemyHealth != null)
                 {
                     // Aplica el daño acumulado
-                    enemyHealth.TakeDamage(flamethrowerDamage.GetCurrentDamage());
+                    enemyHealth.Hurt(flamethrowerDamage.GetCurrentDamage());
                 }
             }
         }
