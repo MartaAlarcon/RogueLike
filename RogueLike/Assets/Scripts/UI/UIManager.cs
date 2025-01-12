@@ -6,7 +6,7 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI coinText;
-    private int totalCoins = 0;
+    public int totalCoins = 0;
     public void UpdateCoinUI()
     {
         coinText.text = totalCoins.ToString("D3");

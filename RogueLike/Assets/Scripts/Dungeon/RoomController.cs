@@ -78,7 +78,7 @@ public class RoomController : MonoBehaviour
     {
         spawnedBossRoom = true;
         yield return new WaitForSeconds(0.5f);
-        if(loadRoomQueue.Count == 0)
+        if (loadRoomQueue.Count == 0)
         {
             Room bossRoom = loadedRooms[loadedRooms.Count - 1];
             Room tempRoom = new Room(bossRoom.X, bossRoom.Y);
@@ -94,6 +94,12 @@ public class RoomController : MonoBehaviour
         {
             return;
         }
+        if (x == 3 && y == 2) 
+        {
+            StartCoroutine(LoadShopScene()); 
+            return;
+        }
+
         RoomInfo newRoomData = new RoomInfo();
         newRoomData.name = name;
         newRoomData.X = x;
@@ -102,8 +108,18 @@ public class RoomController : MonoBehaviour
         loadRoomQueue.Enqueue(newRoomData);
     }
 
+    IEnumerator LoadShopScene()
+    {
+        AsyncOperation loadRoom = SceneManager.LoadSceneAsync("Shop", LoadSceneMode.Additive);
+        while (!loadRoom.isDone)
+        {
+            yield return null;
+        }
+    }
+
+
     IEnumerator LoadRoomRoutine(RoomInfo info)
-    { 
+    {
         string roomName = currentWorldName + info.name;
         AsyncOperation loadRoom = SceneManager.LoadSceneAsync(roomName, LoadSceneMode.Additive);
         while (loadRoom.isDone == false)
@@ -154,6 +170,12 @@ public class RoomController : MonoBehaviour
 
     public void OnPlayerEnterRoom(Room room)
     {
+        if (room.name.Contains("Shop")) 
+        {
+            CameraController.instance.currRoom = room;
+            return;
+        }
+
         CameraController.instance.currRoom = room;
         currRoom = room;
     }

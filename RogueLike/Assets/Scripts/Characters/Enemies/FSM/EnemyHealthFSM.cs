@@ -42,6 +42,8 @@ public class EnemyHealthFSM : MonoBehaviour, IDamageable
         {
             DropCoin();
             Destroy(gameObject);
+            NotifySpikes();
+
         }
     }
 
@@ -53,5 +55,13 @@ public class EnemyHealthFSM : MonoBehaviour, IDamageable
 
         Instantiate(coinPrefab, transform.position, Quaternion.identity);
         Instantiate(coinPrefab, (Vector2)transform.position + randomOffset, Quaternion.identity);
+    }
+    private void NotifySpikes()
+    {
+        Spikes[] allSpikes = FindObjectsOfType<Spikes>();
+        foreach (Spikes spike in allSpikes)
+        {
+            spike.EnemyKilled();
+        }
     }
 }
