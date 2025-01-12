@@ -21,20 +21,30 @@ public class DungeonCrawlerController : MonoBehaviour
     };
     public static List<Vector2Int> GenerationDungeon(DungeonGenerationData dungeonData)
     {
+        positionsVisited.Clear();
         List<DungeonCrawler> dungeonCrawlers = new List<DungeonCrawler>();
+
         for (int i = 0; i < dungeonData.numberOfCrawlers; i++)
         {
             dungeonCrawlers.Add(new DungeonCrawler(Vector2Int.zero));
         }
+
         int iterations = Random.Range(dungeonData.iterationMin, dungeonData.iterationMax);
         for (int i = 0; i < iterations; i++)
         {
             foreach (DungeonCrawler dungeonCrawler in dungeonCrawlers)
             {
                 Vector2Int movePos = dungeonCrawler.Move(directionMovementMap);
-                positionsVisited.Add(movePos);
+                if (!positionsVisited.Contains(movePos))
+                {
+                    positionsVisited.Add(movePos);
+                }
             }
         }
+
+        positionsVisited.Add(new Vector2Int(3, 2)); 
+
         return positionsVisited;
     }
+
 }

@@ -28,7 +28,6 @@ public class Room : MonoBehaviour
     {
         if (RoomController.instance == null)
         {
-            Debug.LogError("No RoomController found in the scene.");
             return;
         }
 
