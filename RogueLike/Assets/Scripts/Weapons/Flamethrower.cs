@@ -6,11 +6,16 @@ public class Flamethrower : MonoBehaviour, IWeapon
     private InputController playerControls;
     private bool isFiring = false;
     private FlamethrowerDamage flamethrowerDamage;
-    public static Flamethrower Instance;
+    public static Flamethrower Instance; 
+
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this; 
+        }
         playerControls = new InputController();
-        flamethrowerDamage = GetComponent<FlamethrowerDamage>(); 
+        flamethrowerDamage = GetComponent<FlamethrowerDamage>();
     }
 
     private void OnEnable()
@@ -53,7 +58,7 @@ public class Flamethrower : MonoBehaviour, IWeapon
 
     private void ApplyDamageToEnemies()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, 1f); 
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, 1f);
 
         foreach (var enemyCollider in hitEnemies)
         {

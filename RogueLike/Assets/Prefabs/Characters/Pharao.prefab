@@ -123,10 +123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c23d053a8d0284290aea3991b2fb2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jugador: {fileID: 0}
-  proyectilPrefab: {fileID: 2148368537631006546, guid: f977036724b21b34eae40b973aafc5ab, type: 3}
+  jugador: {fileID: 172925950718734533, guid: 62f90ab06a51a734eb23024739cfe8af, type: 3}
+  projectilePrefab: {fileID: 2148368537631006546, guid: f977036724b21b34eae40b973aafc5ab, type: 3}
   velocidadDisparo: 8
-  tiempoEntreDisparos: 1
+  timeBetweenShot: 2
   poolSize: 5
 --- !u!70 &6268377295946568086
 CapsuleCollider2D:
