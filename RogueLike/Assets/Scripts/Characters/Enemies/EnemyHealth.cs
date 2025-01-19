@@ -44,6 +44,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
             DropCoin();
             Destroy(gameObject);
             NotifySpikes();
+            FinalBoss.instance.diedEnemies++;
+
         }
     }
 

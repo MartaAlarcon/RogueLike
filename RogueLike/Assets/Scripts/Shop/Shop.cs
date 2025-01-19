@@ -6,6 +6,6 @@ public class Shop : MonoBehaviour
 {
     public void CloseButton()
     {
-        Destroy(gameObject); // Destruye el panel instanciado
+        Destroy(gameObject);
     }
 }

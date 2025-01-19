@@ -15,6 +15,11 @@ public class Character : MonoBehaviour, IDamageable
     private Animator animator;
     private Material defaultMaterial;
     private SpriteRenderer spriteRenderer;
+    private PlayerLife playerLife;
+    [SerializeField] private AudioClip hurtSound;
+    [SerializeField] private AudioClip deadSound;
+    private AudioSource audioSource;
+
 
 
     public void Start()
@@ -24,6 +29,9 @@ public class Character : MonoBehaviour, IDamageable
         animator = GetComponent<Animator>();
         spawnPoint = GameObject.FindWithTag("Respawn");
         healthBar.UpdateHealthBar(startingHealth, health);
+        playerLife = FindObjectOfType<PlayerLife>();
+        audioSource = GetComponent<AudioSource>();
+
 
     }
     public void Awake()
@@ -44,14 +52,16 @@ public class Character : MonoBehaviour, IDamageable
         health-=damage;
         healthBar.UpdateHealthBar(startingHealth, health);
         StartCoroutine(FlashRoutine());
+        audioSource.PlayOneShot(hurtSound);
         if (health <= 0) Die();
     }
     public void Die()
     {     
         health = 0;
+        audioSource.PlayOneShot(deadSound);
         animator.SetFloat("Health", health);
         StartCoroutine(WaitForDeathAnimation());
-
+        playerLife.takeLife();
     }
     private IEnumerator WaitForDeathAnimation()
     {

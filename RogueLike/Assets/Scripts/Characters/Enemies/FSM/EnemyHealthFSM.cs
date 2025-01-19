@@ -43,6 +43,7 @@ public class EnemyHealthFSM : MonoBehaviour, IDamageable
             DropCoin();
             Destroy(gameObject);
             NotifySpikes();
+            FinalBoss.instance.diedEnemies++;
 
         }
     }

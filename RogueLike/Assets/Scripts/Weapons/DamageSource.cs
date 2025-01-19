@@ -7,7 +7,6 @@ public class DamageSource : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Ignorar colliders que sean triggers
         if (collision.isTrigger) return;
 
         EnemyHealthFSM enemyHealthFSM = collision.GetComponent<EnemyHealthFSM>();

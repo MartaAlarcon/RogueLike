@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ShopController : MonoBehaviour
 {
-    [SerializeField] private GameObject shopPrefab; // Referencia al prefab del panel Shop
-    private GameObject instantiatedPanel; // Para guardar la instancia del panel
+    [SerializeField] private GameObject shopPrefab;
+    private GameObject instantiatedPanel; 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -13,14 +13,11 @@ public class ShopController : MonoBehaviour
         {
             if (shopPrefab != null)
             {
-                if (instantiatedPanel == null)
-                {
-                    // Instancia el prefab del panel en la posición de la cámara
-                    instantiatedPanel = Instantiate(shopPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
-                    // Asegúrate de que se active
-                    instantiatedPanel.SetActive(true);
-                }
+
+                instantiatedPanel = Instantiate(shopPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                instantiatedPanel.SetActive(true);
+
             }
             else
             {

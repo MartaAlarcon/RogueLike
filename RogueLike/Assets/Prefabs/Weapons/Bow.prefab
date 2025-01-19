@@ -50,6 +50,7 @@ MonoBehaviour:
   weaponInfo: {fileID: 11400000, guid: 02e47e94103596e4d96c41c8991e64d0, type: 2}
   arrowPrefab: {fileID: 1360829968543123230, guid: b3d90a68528e077469777e2c4af4a541, type: 3}
   arrowSpawnPoint: {fileID: 7964437383466407532}
+  attackCooldown: 0.75
 --- !u!212 &7669166541352178735
 SpriteRenderer:
   m_ObjectHideFlags: 0

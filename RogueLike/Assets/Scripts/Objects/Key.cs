@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class Key : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool isKeyUnlocked = false;
+    public static Key instance;
+    [SerializeField] private AudioClip keySound;
+    private AudioSource audioSource;
+
+
+    private void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
+        instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UnlockKey()
     {
-        
+        audioSource.PlayOneShot(keySound);
+        isKeyUnlocked = true;
     }
+
 }
