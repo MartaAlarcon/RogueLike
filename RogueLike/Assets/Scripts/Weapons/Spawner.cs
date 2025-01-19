@@ -40,7 +40,6 @@ public class Spawner : MonoBehaviour
             GameObject obj = objectPool.Pop();
             obj.SetActive(true);
 
-            // Reiniciar el estado de la flecha
             obj.transform.position = Vector3.zero;
             obj.transform.rotation = Quaternion.identity;
             Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
@@ -53,7 +52,7 @@ public class Spawner : MonoBehaviour
             GameObject obj = Instantiate(prefab);
             obj.SetActive(false);
             objectPool.Push(obj);
-            return GetFromPool(); // Recursivo para obtener el objeto correctamente
+            return GetFromPool(); 
         }
     }
 

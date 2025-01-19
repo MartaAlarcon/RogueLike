@@ -65,6 +65,7 @@ public class Flamethrower : MonoBehaviour, IWeapon
             if (enemyCollider.CompareTag("Enemy"))
             {
                 EnemyHealth enemyHealth = enemyCollider.GetComponent<EnemyHealth>();
+              
                 if (enemyHealth != null)
                 {
                     // Aplica el daño acumulado

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    // Singleton instance
     public static UIManager Instance { get; private set; }
 
     [SerializeField] private TextMeshProUGUI coinText;
@@ -13,7 +12,6 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        // Check for existing instance and enforce singleton
         if (Instance != null && Instance != this)
         {
             Debug.LogError("Multiple instances of UIManager found. Destroying the duplicate.");

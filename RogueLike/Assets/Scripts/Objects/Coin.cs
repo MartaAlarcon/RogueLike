@@ -13,10 +13,12 @@ public class Coin : MonoBehaviour
     private Vector3 moveDir;
     private Rigidbody2D rb;
 
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         UIManager = FindObjectOfType<UIManager>();
+
     }
 
     private void Update()

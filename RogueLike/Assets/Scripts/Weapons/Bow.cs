@@ -12,22 +12,33 @@ public class Bow : MonoBehaviour, IWeapon
     private Animator animator;
     private InputController playerControls;
 
+    [SerializeField] private float attackCooldown = 0.75f; 
+    private bool canAttack = true;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
         playerControls = new InputController();
     }
+
     private void OnEnable()
     {
         playerControls.Enable();
+        playerControls.Combat.Attack.started += _ => AttemptAttack();
     }
 
-    void Start()
+
+    private void AttemptAttack()
     {
-        playerControls.Combat.Attack.started += _ => Attack();
+        if (canAttack)
+        {
+            Attack();
+        }
     }
+
     public void Attack()
     {
+        canAttack = false; 
         animator.SetTrigger(FIRE_HASH);
 
         GameObject arrow = Spawner.Instance.GetFromPool();
@@ -36,19 +47,27 @@ public class Bow : MonoBehaviour, IWeapon
             arrow.transform.position = arrowSpawnPoint.position;
             arrow.transform.rotation = arrowSpawnPoint.rotation;
 
-            // Reinicia cualquier estado de la flecha si es necesario
             Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
             if (rb != null) rb.velocity = Vector2.zero;
         }
+
+        StartCoroutine(ResetAttackCooldown());
+    }
+
+    private IEnumerator ResetAttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+        canAttack = true; 
     }
 
     public WeaponInfo GetWeaponInfo()
     {
         return weaponInfo;
     }
+
     private void OnDisable()
     {
-        playerControls.Combat.Attack.started -= _ => Attack();
+        playerControls.Combat.Attack.started -= _ => AttemptAttack();
         playerControls.Disable();
         animator = null;
     }

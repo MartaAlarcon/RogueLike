@@ -37,17 +37,14 @@ public class ActiveInventory : MonoBehaviour
     }
     private void ChangeActiveWeapon()
     {
-        // Limpia el arma actual
         if (ActiveWeapon.Instance.CurrentActiveWeapon != null)
         {
             (ActiveWeapon.Instance.CurrentActiveWeapon as IWeapon)?.CleanUp();
             Destroy(ActiveWeapon.Instance.CurrentActiveWeapon.gameObject);
         }
 
-        // Obtén el slot actual
         InventorySlot currentSlot = transform.GetChild(slotNumber).GetComponentInChildren<InventorySlot>();
 
-        // Si no hay slot o el slot no está desbloqueado, no equipar arma
         if (currentSlot == null || !currentSlot.isUnlocked)
         {
             ActiveWeapon.Instance.WeaponNull();
@@ -55,7 +52,6 @@ public class ActiveInventory : MonoBehaviour
             return;
         }
 
-        // Instanciar el arma si está desbloqueada
         WeaponInfo weaponInfo = currentSlot.GetWeaponInfo();
         if (weaponInfo == null) return;
 

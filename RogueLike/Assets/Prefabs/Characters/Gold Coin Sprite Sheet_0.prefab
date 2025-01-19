@@ -124,6 +124,8 @@ MonoBehaviour:
   pickUpDistance: 5
   accelartionRate: 0.2
   moveSpeed: 3
+  UIManager: {fileID: 0}
+  coinSound: {fileID: 8300000, guid: 057b530b259e7864caa3307d61e9f14b, type: 3}
 --- !u!58 &5537789820454543475
 CircleCollider2D:
   m_ObjectHideFlags: 0
